@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation       Minha primeira suite de teste automatizado
 
-Resource            resource.robot
+Resource            ${EXECDIR}/resources/resource.robot
 Suite Teardown      Remove User From Mongo     ${filter}
 
 
