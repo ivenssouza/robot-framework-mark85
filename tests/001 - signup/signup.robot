@@ -42,7 +42,7 @@ Password Field Empty
     Register User       ${signupTest}[3]      ${user}
     Alert Should Be     ${signupAlertPassword}
 
- All Fields Empty
+All Fields Empty
     Open Page           signup
     Register User       ${signupTest}[4]      ${user}
     Alert Should Be     ${signupAlertNome}
