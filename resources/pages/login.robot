@@ -7,13 +7,25 @@ Library             String
 
 
 *** Keywords ***
+Login Suite Setup
+    [Documentation]             Delete the user from MongoDB and create a new user calling the API Lib
+    
+    [Arguments]                 ${filter}       ${user}
+
+    Delete User From MONGODB    ${filter}
+    API New User Helper         ${user}
+
+    
 Submit Login Form
-    [Arguments]     ${test}     ${user}
+    [Arguments]                 ${test}         ${user}
     
     IF  '${test}' == 'ok'
         Fill Text       css=input[name=email]       ${user}[email]
         Fill Text       css=input[name=password]    ${user}[password]
-    ELSE IF    '${test}' == 'fail'
+    ELSE IF    '${test}' == 'wrongEmail'
+        Fill Text       css=input[name=email]       wrong@email.com
+        Fill Text       css=input[name=password]    ${user}[password]
+    ELSE IF    '${test}' == 'wrongPassword'
         Fill Text       css=input[name=email]       ${user}[email]
         Fill Text       css=input[name=password]    wrongpassword
     ELSE IF    '${test}' == 'noEmail'
@@ -24,11 +36,4 @@ Submit Login Form
         Fill Text       css=input[name=email]       ${EMPTY}
         Fill Text       css=input[name=password]    ${EMPTY}
     END
-
     Click           css=button[type=submit] >> text=Entrar
-
-User Should Be Logged In
-    [Arguments]     ${user}
-
-    @{name}             Split String        ${user}[name]
-    Get Property        small       innerText       ==      Olá, ${name}[0]

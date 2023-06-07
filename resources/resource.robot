@@ -1,48 +1,42 @@
 *** Settings ***
-Documentation       A resource file containing the trainning app specific keywords and variables for keyword-driven tests that create our own domain specific language. Also SeleniumLibrary itself is imported here so that tests only need to import this resource file.
-#Library             Browser
-#Library             String
+Documentation       A resource file
 
-Library   RobotMongoDBLibrary.Insert
-Library   RobotMongoDBLibrary.Update
-Library   RobotMongoDBLibrary.Find
-Library   RobotMongoDBLibrary.Delete
+Library             Collections
+Library             RequestsLibrary
 
-Resource           pages/components.robot
-Resource           pages/signup.robot
-Resource           pages/login.robot
+Library             RobotMongoDBLibrary.Insert
+Library             RobotMongoDBLibrary.Update
+Library             RobotMongoDBLibrary.Find
+Library             RobotMongoDBLibrary.Delete
+
+Resource            helpers.robot
+
+Resource            pages/components/noticeAlert.robot
+Resource            pages/components/nav.robot
+Resource            pages/signup.robot
+Resource            pages/login.robot
+Resource            pages/tasks.robot
+
 
 *** Variables ***
-# CONNECT WITH CONNECTION STRING CLUSTER
-@{MONGODB_COLLECTIONS}          users       tasks
-&{MONGODB_CONNECT_STRING}       connection=mongodb+srv://qax:xperience@cluster0.vcrmeiw.mongodb.net/?retryWrites=true&w=majority    database=test   collection=users
-
 
 ${BROWSER}      chromium
 ${HEADLESS}     true
 ${DELAY}        0
 ${URL}          http://localhost:3000/
+${URL_API}      http://localhost:3333/
 
 *** Keywords ***
-#Start Session
-#    New Browser        browser=chromium    headless=False
-#    New Page           http://localhost:3000
-
-#Go to signup
-#    Go To           http://localhost:3000/signup
-#    Get Text        css=form h1        equal        Faça seu cadastro
-
-
 Open Page
-    [Documentation]     Returns the title of the webpage found at the given URL.
+    [Arguments]                 ${page}
 
-    [Arguments]         ${page}
-
-    New Browser         headless=${HEADLESS}      browser=${BROWSER}
-    New Page            ${URL}${page}
+    New Browser                 headless=${HEADLESS}        browser=${BROWSER}
+    New Page                    ${URL}${page}
 
 
-Remove User From Mongo
-    [Arguments]     ${filter}
-    ${MSG}      Delete One      ${MONGODB_CONNECT_STRING}       ${filter}
-    Log        Users removed form mongodb
+Delete User
+    [Arguments]                 ${data}
+
+    Delete User From MONGODB    ${data}[filter]
+    ${response}                 POST                        url=${URL_API}users     json=${data}[user]
+    Status Should Be            200                         ${response}
