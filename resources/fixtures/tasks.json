@@ -1,0 +1,47 @@
+{
+    "create": {
+        "filter":{
+            "name": "Barry Allen",
+            "email": "barry.allen@ccpd.com"
+        },
+        "user":{
+            "name": "Barry Allen",
+            "email": "barry.allen@ccpd.com",
+            "password": "velocity"
+        },
+        "task":{
+            "name": "Pagar cartão de crédito",
+            "tags": ["nubank", "inter", "santander"]
+        }
+    },
+    "delete": {
+        "filter":{
+            "name": "Jason Todd",
+            "email": "jason.todd@robin.com"
+        },
+        "user":{
+            "name": "Jason Todd",
+            "email": "jason.todd@robin.com",
+            "password": "redhood"
+        },
+        "task":{
+            "name": "Apagar cartão de crédito",
+            "tags": ["nubank", "inter", "santander"]
+        }
+    },
+    "done": {
+        "filter":{
+            "name": "Dick Grayson",
+            "email": "dick.grayson@robin.com"
+        },
+        "user":{
+            "name": "Dick Grayson",
+            "email": "dick.grayson@robin.com",
+            "password": "nightwing"
+        },
+        "task":{
+            "name": "Marcar como feito Apagar cartão de crédito",
+            "tags": ["nubank", "inter", "santander"]
+        }
+    }
+}
